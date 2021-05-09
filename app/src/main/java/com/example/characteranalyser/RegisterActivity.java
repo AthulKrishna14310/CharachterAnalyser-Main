@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText regEmailField;
     private EditText regPassField;
     private EditText regConfirmPassField;
-    private Button regBtn;
+    private TextView regBtn;
     private TextView regLoginBtn;
     private ProgressBar regProgress;
     private EditText regNameField;
@@ -48,8 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
+        setContentView(R.layout.activity_sign_up);
+        getSupportActionBar().hide();
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -80,8 +80,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String confirm_pass = regConfirmPassField.getText().toString();
                 String Name = regNameField.getText().toString();
                 String Class = regClassField.getText().toString();
-
-                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(confirm_pass)) {
+                String school=regSchoolField.getText().toString();
+                if (!TextUtils.isEmpty(email) &&
+                        !TextUtils.isEmpty(pass) &&
+                        !TextUtils.isEmpty(confirm_pass)) {
                     if (pass.equals(confirm_pass)) {
                         regProgress.setVisibility(View.VISIBLE);
                         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -94,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     user.put("email" ,email);
                                     user.put("name" ,Name);
                                     user.put("class" ,Class);
-
+                                    user.put("school",school);
                                     documentReference
                                             .set(user)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {

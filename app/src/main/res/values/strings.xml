@@ -1,3 +1,121 @@
 <resources>
-    <string name="app_name">CharacterAnalyser</string>
+    <string name="app_name">Charachter Analyser</string>
+    <string name="already_have_an_account">Already have an account? <font color='#98FFB5'>Login</font></string>
+    <string name="forgot_your_pass">Forgot your <font color='#FFC700'>password ?</font></string>
+    <string name="trace_here">Trace <font color='#00FFE0'>Here</font></string>
+    <string name="reco_success">Text recognised successfully.</string>
+    <string name="reco_failed">Text recognition failed, Try again.</string>
+    <string name="reco_info">Some internal error , Please try again.</string>
+    <string name="err_spot_success">Errors spotted successfully</string>
+    <string name="uploadsuccess">Data uploaded successfully</string>
+    <string name="new_here">New here? <font color='#6ECBFF'>Register</font></string>
+    <string name="graph_line">#3399CC</string>
+    <string name="configuring">Configuring , Please wait...</string>
+    <string name="start_tracing">Start tracing letter </string>
+    <string name="continue_trace">Continue tracing..</string>
+    <string name="traced_out_of_region">Traced out of region. Score = </string>
+    <string name="recognize">Recognising your letter..</string>
+    <string name="spotting">Spotting errors...</string>
+    <string name="upload_report">Uploading your report..</string>
+    <string-array name="Letter">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+        <item>a</item>
+        <item>b</item>
+        <item>c</item>
+        <item>d</item>
+        <item>e</item>
+        <item>f</item>
+        <item>g</item>
+        <item>h</item>
+        <item>i</item>
+        <item>j</item>
+        <item>k</item>
+        <item>l</item>
+        <item>m</item>
+        <item>n</item>
+        <item>o</item>
+        <item>p</item>
+        <item>q</item>
+        <item>r</item>
+        <item>s</item>
+        <item>t</item>
+        <item>u</item>
+        <item>v</item>
+        <item>w</item>
+        <item>x</item>
+        <item>y</item>
+        <item>z</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>0</item>
+
+    </string-array>
+    <string-array name="Letter2">
+        <item>All</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+    </string-array>
+    <string-array name="Type">
+        <item>Score</item>
+        <item>Time Taken</item>
+        <item>Speed</item>
+        <item>No of Errors</item>
+
+    </string-array>
 </resources>

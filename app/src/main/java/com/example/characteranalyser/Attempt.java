@@ -13,6 +13,8 @@ public class Attempt {
     private ArrayList<String> Screens;
     private String AttemptedAt;
 
+    public Attempt() {
+    }
 
     public Attempt(String letter, String ne, String score, String speed,
                    String time, String total, String user,

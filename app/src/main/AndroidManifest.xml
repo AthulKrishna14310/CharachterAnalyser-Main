@@ -9,22 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="landscape"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CharacterAnalyser">
-        <activity android:name=".ProfileActivity"></activity>
+        android:theme="@style/Theme.UI_CharachterAnalyser">
+        <activity android:name=".DecodeScreen"></activity>
+        <activity android:name=".SuccessScreen" />
+        <activity
+            android:name=".ForgotPassword"
+            android:screenOrientation="landscape" />
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".TracingActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.DayNight" />
         <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.MaterialComponents.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText loginEmailText;
     private EditText loginPassText;
-    private Button loginBtn;
+    private TextView loginBtn;
     private TextView loginRegBtn;
     private ProgressBar loginProgress;
 
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_screen);
 
         loginEmailText = findViewById(R.id.login_email);
         loginPassText = findViewById(R.id.login_password);
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         loginRegBtn = findViewById(R.id.reg_btn);
         loginProgress = findViewById(R.id.login_progress);
         mAuth = FirebaseAuth.getInstance();
-
+        getSupportActionBar().hide();
 
         loginRegBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +75,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this,"Fields Are Empty",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        findViewById(R.id.forgot_pass).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ForgotPassword.class));
             }
         });
     }

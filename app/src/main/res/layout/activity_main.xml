@@ -7,53 +7,53 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-        <RelativeLayout
-            android:id="@+id/profile_layout"
+    <RelativeLayout
+        android:id="@+id/profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="8dp">
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/student_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingRight="8dp">
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/profile_image"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textSize="20dp"
+            />
 
-            <ImageView
-                android:id="@+id/profile_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/student_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_name"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/profile_image"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textSize="20dp"
+            />
 
-            <TextView
-                android:id="@+id/student_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/profile_image"
-                android:gravity="center"
-                android:padding="16dp"
-                android:textSize="20dp"
-                />
+        <Button
+            android:id="@+id/tracing_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_class"
+            android:layout_alignParentRight="true"
+            android:paddingTop="8dp"
+            android:backgroundTint="#039BE5"
+            android:text="Start Practicing" />
 
-            <TextView
-                android:id="@+id/student_class"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/student_name"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/profile_image"
-                android:gravity="center"
-                android:padding="16dp"
-                android:textSize="20dp"
-                />
-
-            <Button
-                android:id="@+id/tracing_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/student_class"
-                android:layout_alignParentRight="true"
-                android:paddingTop="8dp"
-                android:backgroundTint="#039BE5"
-                android:text="Start Practicing" />
-
-        </RelativeLayout>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/score_list"
