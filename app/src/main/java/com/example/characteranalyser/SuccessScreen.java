@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +30,7 @@ public class SuccessScreen extends AppCompatActivity {
     private TextView ne;
     private ArrayList<String>aList=new ArrayList<>();
     private ListView errorList;
-
+    private TextView result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class SuccessScreen extends AppCompatActivity {
         speed=findViewById(R.id.speed);
         time=findViewById(R.id.timeTaken);
         ne=findViewById(R.id.numberOfErrors);
+        result=findViewById(R.id.textViewEx);
         errorList=findViewById(R.id.errorList);
         errorList.setVisibility(View.INVISIBLE);
     }
@@ -64,9 +66,18 @@ public class SuccessScreen extends AppCompatActivity {
                 if(aList.size()!=0) {
                     CustomAdapter customAdapter = new CustomAdapter(SuccessScreen.this, aList);
                     errorList.setAdapter(customAdapter);
-                }
+                    }
+                if(Integer.parseInt(attempt.getScore())>40){
+                        result.setText(R.string.wow);
+                    }else if(Integer.parseInt(attempt.getScore())<40&&Integer.parseInt(attempt.getScore())>30){
+                        result.setText(R.string.average);
+                    }else if(Integer.parseInt(attempt.getScore())<30&&Integer.parseInt(attempt.getScore())>20){
+                        result.setText(R.string.failed);
+                        result.setTextColor(Color.RED);
+                    }
                 }
         });
+
         ne.setOnClickListener(v -> {
             showLog(ne.getX()+" "+ne.getY());
             ObjectAnimator animation = ObjectAnimator.ofFloat(ne, "translationY", -464f);

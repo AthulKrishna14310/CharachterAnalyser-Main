@@ -1,13 +1,20 @@
 package com.example.characteranalyser;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -35,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private Spinner letterSpinner;
     private Spinner categorySpinner;
+    private TextView attemptsTitle;
+    private TextView subtitle;
+    private ProgressBar loadProgress;
+    private TextView loadText;
     private GraphView graph;
     private GridLabelRenderer gridLabel;
     private FirebaseFirestore firebaseFirestore;
@@ -63,10 +74,14 @@ public class MainActivity extends AppCompatActivity {
         school=findViewById(R.id.student_school);
         tracingBtn = findViewById(R.id.tracing_btn);
         logoutButton=findViewById(R.id.logout_btn);
+        loadProgress =findViewById(R.id.loadProgress);
+        loadText=findViewById(R.id.loadingText);
+        attemptsTitle=findViewById(R.id.attemptsTitle);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         graph=findViewById(R.id.graph);
-        letterSpinner = findViewById(R.id.letterSpinner);
+        subtitle=findViewById(R.id.subtitle);
+        letterSpinner = findViewById(R.id.letterSpinnerA);
         categorySpinner = findViewById(R.id.categorySpinner);
         firebaseFirestore = FirebaseFirestore.getInstance();
         attempts=new ArrayList<>();
@@ -150,14 +165,24 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-    }
+          }
 
     @Override
     protected void onStart() {
         super.onStart();
+        graph.setVisibility(View.INVISIBLE);
+        letterSpinner.setVisibility(View.INVISIBLE);
+        categorySpinner.setVisibility(View.INVISIBLE);
+        listView.setVisibility(View.INVISIBLE);
+        attemptsTitle.setVisibility(View.INVISIBLE);
+        loadText.setVisibility(View.VISIBLE);
+        loadProgress.setVisibility(View.VISIBLE);
+        subtitle.setVisibility(View.INVISIBLE);
         graph.removeAllSeries();
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            loadText.setTextAppearance(R.style.TextAppearance_MaterialComponents_Headline5);
+        }
+        loadText.setText("Loading your data...");
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
         if(selectedCategory.contentEquals("Score")){
             series.setColor(Color.parseColor(getString(R.string.graph_line)));
@@ -177,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 .orderBy("AttemptedAt", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
+
                     if (task.isSuccessful()) {
                         arrayList.clear();
                         attempts.clear();
@@ -196,49 +222,106 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                             }
+                            ;
                         }
-                        if (selectedCategory.contentEquals("Score")) {
-                            for (int i = 0; i < attempts.size(); i++) {
-                                series.appendData(
-                                        new DataPoint(i + 1,
-                                                Integer.parseInt(attempts.get(i).getScore())),
-                                        true,
-                                        attempts.size());
+                        if(attempts.size()>0) {
+                            graph.setVisibility(View.VISIBLE);
+                            letterSpinner.setVisibility(View.VISIBLE);
+                            categorySpinner.setVisibility(View.VISIBLE);
+                            listView.setVisibility(View.VISIBLE);
+                            attemptsTitle.setVisibility(View.VISIBLE);
+                            loadProgress.setVisibility(View.INVISIBLE);
+                            loadText.setVisibility(View.INVISIBLE);
+                            showLog("attempt size = " + attempts.size());
+                            if (selectedCategory.contentEquals("Score")) {
+                                for (int i = 0; i < attempts.size(); i++) {
+                                    series.appendData(
+                                            new DataPoint(i + 1,
+                                                    Integer.parseInt(attempts.get(i).getScore())),
+                                            true,
+                                            attempts.size());
+                                }
+                            } else if (selectedCategory.contentEquals("No of Errors")) {
+                                for (int i = 0; i < attempts.size(); i++) {
+                                    series.appendData(
+                                            new DataPoint(i + 1,
+                                                    Integer.parseInt(attempts.get(i).getNe())),
+                                            true,
+                                            attempts.size());
+                                }
+                            } else if (selectedCategory.contentEquals("Time Taken")) {
+                                for (int i = 0; i < attempts.size(); i++) {
+                                    series.appendData(
+                                            new DataPoint(i + 1,
+                                                    Integer.parseInt(String.valueOf(attempts.get(i).getTime().subSequence(0, 2)))),
+                                            true,
+                                            attempts.size());
+                                }
+                            } else if (selectedCategory.contentEquals("Speed")) {
+                                for (int i = 0; i < attempts.size(); i++) {
+                                    series.appendData(
+                                            new DataPoint(i + 1,
+                                                    Integer.parseInt(String.valueOf(attempts.get(i).getSpeed().subSequence(0, 2)))),
+                                            true,
+                                            attempts.size());
+                                }
                             }
-                        } else if (selectedCategory.contentEquals("No of Errors")) {
-                            for (int i = 0; i < attempts.size(); i++) {
-                                series.appendData(
-                                        new DataPoint(i + 1,
-                                                Integer.parseInt(attempts.get(i).getNe())),
-                                        true,
-                                        attempts.size());
+
+                            attemptsAdapter.notifyDataSetChanged();
+                            graph.addSeries(series);
+                            //graph.getViewport().setScrollable(true);
+                            graph.getViewport().setScalable(true);
+                            graph.getViewport().setMinX(1);
+                            graph.getViewport().setMinY(0);
+
+                        }else{
+                            loadProgress.setVisibility(View.INVISIBLE);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                loadText.setTextAppearance(R.style.TextAppearance_MaterialComponents_Headline4);
                             }
-                        } else if (selectedCategory.contentEquals("Time Taken")) {
-                            for (int i = 0; i < attempts.size(); i++) {
-                                series.appendData(
-                                        new DataPoint(i + 1,
-                                                Integer.parseInt(String.valueOf(attempts.get(i).getTime().subSequence(0, 2)))),
-                                        true,
-                                        attempts.size());
-                            }
-                        } else if (selectedCategory.contentEquals("Speed")) {
-                            for (int i = 0; i < attempts.size(); i++) {
-                                series.appendData(
-                                        new DataPoint(i + 1,
-                                                Integer.parseInt(String.valueOf(attempts.get(i).getSpeed().subSequence(0, 2)))),
-                                        true,
-                                        attempts.size());
-                            }
+                            loadText.setText(R.string.welcome);
+                            ObjectAnimator animation = ObjectAnimator.ofFloat(loadText, "translationX", -320f);
+                            animation.setDuration(300);
+                            animation.start();
+                            ObjectAnimator animation2 = ObjectAnimator.ofFloat(tracingBtn, "translationY", +240f);
+                            animation2.setDuration(300);
+                            animation2.start();
+                            animation2.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    subtitle.setVisibility(View.VISIBLE);
+                                    tracingBtn.setOnClickListener(v -> {
+                                        loadText.setVisibility(View.INVISIBLE);
+                                        subtitle.setVisibility(View.INVISIBLE);
+                                        loadProgress.setVisibility(View.INVISIBLE);
+                                        ObjectAnimator animationX = ObjectAnimator.ofFloat(loadText, "translationX", 0);
+                                        animationX.setDuration(300);
+                                        animationX.start();
+                                        animationX.addListener(new AnimatorListenerAdapter() {
+                                            @Override
+                                            public void onAnimationEnd(Animator animation) {
+                                                super.onAnimationEnd(animation);
+                                                ObjectAnimator animation2 = ObjectAnimator.ofFloat(tracingBtn, "translationY", 0);
+                                                animation2.setDuration(300);
+                                                animation2.start();
+                                                animation2.addListener(new AnimatorListenerAdapter() {
+                                                    @Override
+                                                    public void onAnimationEnd(Animator animation) {
+                                                        super.onAnimationEnd(animation);
+                                                        Intent tracingIntent = new Intent(MainActivity.this, TracingActivity.class);
+                                                        startActivity(tracingIntent);
+                                                    }
+                                                });
+
+                                            }
+                                        });
+
+                                    });
+
+                                }
+                            });
                         }
-
-                        attemptsAdapter.notifyDataSetChanged();
-                        graph.addSeries(series);
-                        graph.getViewport().setScrollable(true);
-                        graph.getViewport().setScalable(true);
-                        graph.getViewport().setMinX(1);
-                        graph.getViewport().setMinY(0);
-
-
                     } else {
                         showLog("Error getting documents: "+ task.getException());
                     }

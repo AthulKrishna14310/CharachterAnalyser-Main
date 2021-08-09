@@ -33,12 +33,12 @@ public class DecodeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trace_screen);
+        setContentView(R.layout.activity_decode_screen);
         getSupportActionBar().hide();
         submitButton=findViewById(R.id.submitButton);
         tracingLayout=findViewById(R.id.traceLayout);
         homeButton=findViewById(R.id.homeButton);
-        letterSpinner = findViewById(R.id.letterSpinner);
+        letterSpinner = findViewById(R.id.letterSpinnerA);
         recognitionImage=findViewById(R.id.recognitionCheck);
         recognitionProgress=findViewById(R.id.recognitionProgress);
         recognitionText=findViewById(R.id.recognitionText);
@@ -83,8 +83,8 @@ public class DecodeScreen extends AppCompatActivity {
         homeButton.setOnClickListener(v -> finish());
 
         ArrayAdapter<String> letterAdapter = new ArrayAdapter<String>(DecodeScreen.this,
-                R.layout.simple_list_item_1,
-                getResources().getStringArray(R.array.Letter));
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.Decode));
         letterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         letterSpinner.setAdapter(letterAdapter);
         letterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

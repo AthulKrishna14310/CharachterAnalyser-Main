@@ -54,12 +54,12 @@
         android:layout_height="81dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/traceLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083"
+        app:layout_constraintVertical_bias="0.86"
+        android:layout_marginTop="16dp"
         app:srcCompat="@drawable/ic_submit"
         tools:ignore="VectorDrawableCompat" />
 
@@ -67,25 +67,26 @@
         android:id="@+id/refresh"
         android:layout_width="72dp"
         android:layout_height="81dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/traceLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.331"
+        app:layout_constraintVertical_bias="0.86"
         app:srcCompat="@drawable/ic_refresh"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        android:layout_marginTop="16dp"/>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/refresh"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintTop_toBottomOf="@id/homeButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
         android:layout_marginTop="16dp"
+        android:id="@+id/A"
         android:background="@drawable/errorbg">
     <Spinner
-        android:id="@+id/letterSpinner"
+        android:id="@+id/letterSpinnerA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.Spinner.Underlined"
@@ -95,7 +96,61 @@
         android:pointerIcon="arrow"
         android:popupTheme="@style/Theme.MaterialComponents.Light"
         android:gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="16dp"
          />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        android:layout_marginTop="16dp"
+        android:id="@+id/a"
+        android:background="@drawable/errorbg">
+        <Spinner
+            android:id="@+id/letterSpinnera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            android:pointerIcon="arrow"
+
+            android:popupTheme="@style/Theme.MaterialComponents.Light"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="16dp"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/a"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.031"
+        android:layout_marginTop="16dp"
+        android:id="@+id/n"
+        android:background="@drawable/errorbg">
+        <Spinner
+            android:id="@+id/letterSpinner1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            android:pointerIcon="arrow"
+
+            android:popupTheme="@style/Theme.MaterialComponents.Light"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="16dp"
+            />
     </RelativeLayout>
     <ImageView
         android:id="@+id/imageView9"
@@ -130,7 +185,7 @@
     <com.example.characteranalyser.TracingLayout
         android:layout_width="wrap_content"
         android:layout_height="450dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="160dp"
         android:background="@drawable/bg"
         android:id="@+id/traceLayout"
         app:layout_constraintTop_toBottomOf="parent"

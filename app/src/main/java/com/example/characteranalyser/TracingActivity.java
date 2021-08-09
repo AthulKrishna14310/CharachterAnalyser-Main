@@ -1,14 +1,9 @@
 package com.example.characteranalyser;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,15 +17,11 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.jjoe64.graphview.GraphView;
@@ -48,6 +39,9 @@ public class TracingActivity extends AppCompatActivity {
     private TracingLayout tracingLayout;
     private ImageButton homeButton;
     private Spinner letterSpinner;
+    private Spinner letterSpinnera;
+    private Spinner letterSpinner1;
+
     private String selectedLetter="A";
     private TextRecognizer recognizer;
     private TextView recognitionText;
@@ -79,7 +73,10 @@ public class TracingActivity extends AppCompatActivity {
         submitButton=findViewById(R.id.submitButton);
         tracingLayout=findViewById(R.id.traceLayout);
         homeButton=findViewById(R.id.homeButton);
-        letterSpinner = findViewById(R.id.letterSpinner);
+        letterSpinner = findViewById(R.id.letterSpinnerA);
+        letterSpinnera = findViewById(R.id.letterSpinnera);
+        letterSpinner1 = findViewById(R.id.letterSpinner1);
+
         recognizer = TextRecognition.getClient();
         recognitionImage=findViewById(R.id.recognitionCheck);
         recognitionProgress=findViewById(R.id.recognitionProgress);
@@ -153,6 +150,59 @@ public class TracingActivity extends AppCompatActivity {
             }
 
         });
+
+
+        ArrayAdapter<String> letterAdaptera = new ArrayAdapter<String>(TracingActivity.this,
+                R.layout.dropdownlistitem,
+                getResources().getStringArray(R.array.Lettera));
+        letterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        letterSpinnera.setAdapter(letterAdaptera);
+        letterSpinnera.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView,
+                                       View selectedItemView,
+                                       int position,
+                                       long id) {
+                selectedLetter=letterSpinnera.getSelectedItem().toString();
+                tracingLayout.setSelectedLetter(selectedLetter);
+                tracingLayout.setMODE(TracingLayout.TRACE);
+                tracingLayout.downloadRegions(uploadProgress,uploadText);
+                refreshScreen();
+                showGraph(selectedLetter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
+
+        ArrayAdapter<String> letterAdapter1 = new ArrayAdapter<String>(TracingActivity.this,
+                R.layout.dropdownlistitem,
+                getResources().getStringArray(R.array.number));
+        letterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        letterSpinner1.setAdapter(letterAdapter1);
+        letterSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView,
+                                       View selectedItemView,
+                                       int position,
+                                       long id) {
+                selectedLetter=letterSpinner1.getSelectedItem().toString();
+                tracingLayout.setSelectedLetter(selectedLetter);
+                tracingLayout.setMODE(TracingLayout.TRACE);
+                tracingLayout.downloadRegions(uploadProgress,uploadText);
+                refreshScreen();
+                showGraph(selectedLetter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
 
         showGraph(selectedLetter);
     }
@@ -276,7 +326,7 @@ public class TracingActivity extends AppCompatActivity {
                                         attempts.size());
                             }
                             graph.addSeries(series);
-                            graph.getViewport().setScrollable(true);
+                            //graph.getViewport().setScrollable(true);
                             graph.getViewport().setScalable(true);
                             graph.getViewport().setMinX(1);
                             graph.getViewport().setMinY(0);
